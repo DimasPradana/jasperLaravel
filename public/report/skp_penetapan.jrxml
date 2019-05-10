@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="skp_penetapan" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b354235d-e8b5-4467-87d2-6efe6514351e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="localhost"/>
+	<property name="com.jaspersoft.studio.report.description" value="Laporan untuk bidang penetapan"/>
+	<parameter name="dateStart" class="java.lang.String">
+		<parameterDescription><![CDATA[tanggal start]]></parameterDescription>
+		<defaultValueExpression><![CDATA[DATE(2019,01,01)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dateEnd" class="java.lang.String">
+		<parameterDescription><![CDATA[tanggal stop]]></parameterDescription>
+		<defaultValueExpression><![CDATA[DATE(2019,04,30)]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select `e-pajak`.`skp`.`tanggalentri` as Tanggal_Entri,
+    `e-pajak`.`skp`.`tglbayar` as Tanggal_Bayar,
+    `e-pajak`.`skp`.`nomor_skprd` as Nomor_SKPRD,
+    `e-pajak`.`skp`.`DataEntri` as Data_Entri,
+    `e-pajak`.`sptpd`.`namawp` as Wajib_Pajak,
+    `e-pajak`.`sptpd`.`keteranganpajak` as Uraian,
+    `e-pajak`.`sptpd`.`jumlahpajak` as Ketetapan,
+    `e-pajak`.`tandabayar`.`jumlahpajak` as Terbayar,
+    `e-pajak`.`skp`.`Penyetor` as Penyetor,
+    `e-pajak`.`skp`.`masa1` as Masa_1,
+    `e-pajak`.`skp`.`masa2` as Masa_2,
+    `e-pajak`.`sptpd`.`jenispajak`,
+    `e-pajak`.`skp`.`lunas` as Lunas,
+    `e-pajak`.`tarif_dasar_pajak`.`noid` as tdp_id,
+    `e-pajak`.`tarif_dasar_pajak`.`obyekpajak` as Nama_Rekening,
+    `e-pajak`.`tarif_dasar_pajak`.`rekeninginduk` as Kode_Rekening
+from `e-pajak`.`skp`
+left join `e-pajak`.`tandabayar` on `e-pajak`.`tandabayar`.`nomor_skprd`=`e-pajak`.`skp`.`nomor_skprd`
+left join `e-pajak`.`sptpd` on `e-pajak`.`sptpd`.`noid`=`e-pajak`.`skp`.`nomor_sptpd`
+left join `e-pajak`.`tarif_dasar_pajak` on `e-pajak`.`sptpd`.`obyekpajak`=`e-pajak`.`tarif_dasar_pajak`.`noid`
+where
+`e-pajak`.`skp`.`keterangan`= 0 
+AND `e-pajak`.`skp`.`aktif`= 1
+AND `e-pajak`.`skp`.`tanggalentri` BETWEEN $P{dateStart} AND $P{dateEnd}
+order by `e-pajak`.`tarif_dasar_pajak`.`RekeningInduk`]]>
+	</queryString>
+	<field name="Tanggal_Entri" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="Tanggal_Entri"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="Tanggal_Bayar" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="Tanggal_Bayar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="Nomor_SKPRD" class="java.math.BigInteger">
+		<property name="com.jaspersoft.studio.field.label" value="Nomor_SKPRD"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="Data_Entri" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Data_Entri"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="Wajib_Pajak" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Wajib_Pajak"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sptpd"/>
+	</field>
+	<field name="Uraian" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Uraian"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sptpd"/>
+	</field>
+	<field name="Ketetapan" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Ketetapan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sptpd"/>
+	</field>
+	<field name="Terbayar" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="Terbayar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sptpd"/>
+	</field>
+	<field name="Penyetor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Penyetor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="Masa_1" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="Masa_1"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="Masa_2" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="Masa_2"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="jenispajak" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="jenispajak"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sptpd"/>
+	</field>
+	<field name="Lunas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="Lunas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="skp"/>
+	</field>
+	<field name="tdp_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="tdp_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tarif_dasar_pajak"/>
+	</field>
+	<field name="Nama_Rekening" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Nama_Rekening"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tarif_dasar_pajak"/>
+	</field>
+	<field name="Kode_Rekening" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="Kode_Rekening"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tarif_dasar_pajak"/>
+	</field>
+	<variable name="skprd_count" class="java.lang.Integer" resetType="Group" resetGroup="Kode_Rekening" calculation="Count">
+		<variableExpression><![CDATA[$F{Nomor_SKPRD}]]></variableExpression>
+	</variable>
+	<variable name="Ketetapan_total" class="java.lang.Double" resetType="Group" resetGroup="Kode_Rekening" calculation="Sum">
+		<variableExpression><![CDATA[$F{Ketetapan}]]></variableExpression>
+	</variable>
+	<variable name="Terbayar_total" class="java.lang.Double" resetType="Group" resetGroup="Kode_Rekening" calculation="Sum">
+		<variableExpression><![CDATA[$F{Terbayar}]]></variableExpression>
+	</variable>
+	<variable name="Lunas_count" class="java.lang.Integer" resetType="Group" resetGroup="Kode_Rekening" calculation="Sum">
+		<variableExpression><![CDATA[$F{Lunas}]]></variableExpression>
+	</variable>
+	<group name="Kode_Rekening" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{Kode_Rekening}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="800" height="30" forecolor="#F7F7F7" backcolor="#7DBBFA" uuid="e4994dde-d666-4aec-ade6-92c5cd24e81d">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="0" width="80" height="30" uuid="0624dc34-90b4-49f1-a6e1-2f6d01e55704">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d873a554-7d12-4450-bc93-6fd16130a3e0"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal Entri]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="80" y="0" width="100" height="30" uuid="3168872f-f0f2-4f2c-88d8-11c994c62287">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ec56e0c7-428c-4d21-aa33-bd8cdf7628ff"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal Bayar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="0" width="100" height="30" uuid="803b3390-018d-4bbb-9d79-62d2723d1b91">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="afc6509f-3c83-4b04-b77d-29ec3e0fc7a7"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nomor SKP/R-D]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="280" y="0" width="100" height="30" uuid="4ba3c443-e2cd-4dc5-a888-a4f0b36c8e94">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="124fdd9a-ede2-4837-9258-544638d111e0"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ketetapan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="380" y="0" width="100" height="30" uuid="4bf68ba0-1461-4f44-b9d2-9272d2e3f0e8">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="92c697b6-d4b0-4964-8fd9-27634ef2f551"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Terbayar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="480" y="0" width="100" height="30" uuid="54c03542-4e24-4619-b5c0-d2fbf8e0a79f">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40571a3a-89fc-42ec-9fe8-ec9a99c0a940"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Penyetor]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="580" y="0" width="160" height="30" uuid="b9b3e9e1-cea2-4fc9-8b36-440b0dc311b0">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fcb50bca-a74d-44ca-903e-8160f3eda5e9"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Uraian]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="740" y="0" width="60" height="30" uuid="833f3f19-ae0b-4a7f-9a4e-256623c2c4e5">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22a339d2-7595-4af0-bdf5-67b75a095b1d"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Lunas]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Prevent">
+			<staticText>
+				<reportElement x="0" y="0" width="800" height="30" printWhenGroupChanges="Kode_Rekening" uuid="d77ae53b-5ca4-4a86-9dc6-b9771ebf7d0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SKP PENETAPAN]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="120" y="0" width="260" height="15" forecolor="#000000" uuid="cd86b28c-678e-4889-b259-c4fb83c6737a">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Kode_Rekening}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="15" width="260" height="15" forecolor="#000000" uuid="d45cd77a-ab07-44ae-9bce-3a7e9b41735e">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nama_Rekening}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="120" height="15" uuid="18b837b4-4ad2-48ab-a585-86a3adc23d12">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[KODE REKENING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="120" height="15" uuid="04671e46-7413-49c7-9287-e1c25fdca170">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAMA REKENING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="100" height="30" uuid="a76f6a31-84b2-40a0-be6a-972535598413">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RENTANG TANGGAL]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="580" y="0" width="100" height="15" uuid="12dbf132-b83e-47c6-abed-fa20e8be9946"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateStart}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy-MM-dd">
+				<reportElement x="580" y="15" width="100" height="15" uuid="655da2f3-e29d-44e0-a983-1e104684764d"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateEnd}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="0" y="0" width="80" height="30" uuid="e4076528-3f5b-4ccc-b88c-04904ec4dfc5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d873a554-7d12-4450-bc93-6fd16130a3e0"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Tanggal_Entri}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yyyy">
+				<reportElement x="80" y="0" width="100" height="30" uuid="4c90b48f-ba7b-4f71-bf58-91d3aaade81a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ec56e0c7-428c-4d21-aa33-bd8cdf7628ff"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Tanggal_Bayar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="100" height="30" uuid="67b332fe-e5ac-4967-bac1-96942a6c6739">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="afc6509f-3c83-4b04-b77d-29ec3e0fc7a7"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[String.format("%05d",$F{Nomor_SKPRD})]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.##;Rp -##0.##">
+				<reportElement x="280" y="0" width="100" height="30" uuid="45965356-602a-4624-9250-a2d2e8228c59">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="124fdd9a-ede2-4837-9258-544638d111e0"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Ketetapan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,##0.##;Rp -##0.##">
+				<reportElement x="380" y="0" width="100" height="30" uuid="03638fb7-d823-43fc-a6e9-dfc40ae34092">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="92c697b6-d4b0-4964-8fd9-27634ef2f551"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Terbayar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="100" height="30" uuid="8208ca4f-be0b-4a7b-81a3-8e060b5b7f6d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40571a3a-89fc-42ec-9fe8-ec9a99c0a940"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Penyetor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="0" width="160" height="30" uuid="83017d0f-3a30-47d6-82e1-328504c7a3bf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fcb50bca-a74d-44ca-903e-8160f3eda5e9"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Uraian}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="0" width="60" height="30" uuid="937ecde2-5720-482b-b6b3-7e40f9f2be03">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22a339d2-7595-4af0-bdf5-67b75a095b1d"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Lunas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="30" splitType="Prevent">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="180" y="0" width="100" height="30" uuid="216cc594-e083-4d10-8ca2-34fa4d349015"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah SKP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="100" height="30" uuid="88e05c54-1afe-4a41-8af2-ea36fcbc547a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah Ketetapan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="100" height="30" uuid="a1ddea76-c572-4946-9a93-517e8e0f4bc5"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah Terbayar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="740" y="0" width="60" height="30" uuid="ca36e766-b401-4d61-954a-8ffaf54d61e6"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jumlah Lunas]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="30" splitType="Prevent">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField>
+				<reportElement x="180" y="0" width="100" height="30" uuid="4f451dc5-4b9f-41e2-a6a4-0725219a5360">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{skprd_count}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,###.##;Rp -#,###.##">
+				<reportElement x="280" y="0" width="100" height="30" uuid="8221fb4a-0f80-4696-9b05-b08cc7bfb3ea">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Ketetapan_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="740" y="0" width="60" height="30" uuid="8c555f4a-b14d-4619-8cfb-f43be613ef61">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Lunas_count}]]></textFieldExpression>
+			</textField>
+			<textField pattern="Rp #,###.##;Rp -#,###.##">
+				<reportElement x="380" y="0" width="100" height="30" uuid="c0a082bd-2463-44ed-84c4-0cdcb4532ac2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{Terbayar_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
