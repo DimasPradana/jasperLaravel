@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## REAL README FOR THIS PROJECT
+## README FOR THIS PROJECT
 In this case Im using laravel on /var/www/html, not tested on lamp. When
 using this, you must change your public/report (*folder that you will
 used for compile and process the jrxml and jasper file) folder into
