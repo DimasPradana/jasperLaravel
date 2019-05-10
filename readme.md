@@ -12,7 +12,7 @@ In this case Im using laravel on /var/www/html, not tested on lamp. When
 using this, you must change your public/report (*folder that you will
 used for compile and process the jrxml and jasper file) folder into
 www-data:www-data user, by using command "sudo chmod -R www-data:www-data
-report/"
+report/" & you must java version 8, java 11 not working on "process" state
 
 ## About Laravel
 
